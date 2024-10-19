@@ -5,9 +5,9 @@ using Infrastructure.Bases.Data.Repositories;
 
 namespace Infrastructure.Data.Repositories;
 
-public class PersonRepository : Repository<Person>, IPersonRepository
+public class DataTypeRepository : Repository<DataType>, IDataTypeRepository
 {
-    public PersonRepository(ApplicationDbContext dbContext) : base(dbContext)
+    public DataTypeRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
     }
 }

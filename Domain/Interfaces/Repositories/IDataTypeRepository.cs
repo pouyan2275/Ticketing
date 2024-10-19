@@ -3,6 +3,6 @@ using Domain.Bases.Interfaces.Repositories;
 
 namespace Domain.Interfaces.Repositories;
 
-public interface IPersonRepository : IRepository<Person>
+public interface IDataTypeRepository : IRepository<DataType>
 {
 }

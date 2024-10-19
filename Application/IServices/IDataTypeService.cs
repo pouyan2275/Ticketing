@@ -1,0 +1,9 @@
+﻿using Application.Bases.Interfaces.IServices;
+using Domain.Entities;
+
+namespace Application.IServices
+{
+    public interface IDataTypeService : IBaseService<DataType>
+    {
+    }
+}

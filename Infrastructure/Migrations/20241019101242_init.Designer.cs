@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240925105057_init")]
+    [Migration("20241019101242_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Degree", b =>
+            modelBuilder.Entity("Domain.Entities.DataType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,6 +36,15 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DataTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -48,10 +57,15 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Degrees", (string)null);
+                    b.HasIndex("DataTypeId");
+
+                    b.HasIndex("IsDeleted")
+                        .HasFilter("IsDeleted = 0");
+
+                    b.ToTable("DataType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Person", b =>
+            modelBuilder.Entity("Domain.Entities.Ticket", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,11 +77,11 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DegreeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Family")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -81,25 +95,30 @@ namespace Infrastructure.Migrations
                     b.Property<string>("NationalCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("State")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("Type")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("DegreeId");
+                    b.HasIndex("IsDeleted")
+                        .HasFilter("IsDeleted = 0");
 
-                    b.ToTable("Persons", (string)null);
+                    b.ToTable("Tickets", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Person", b =>
+            modelBuilder.Entity("Domain.Entities.DataType", b =>
                 {
-                    b.HasOne("Domain.Entities.Degree", "Degree")
-                        .WithMany("Person")
-                        .HasForeignKey("DegreeId");
-
-                    b.Navigation("Degree");
+                    b.HasOne("Domain.Entities.DataType", null)
+                        .WithMany("ChildsDataType")
+                        .HasForeignKey("DataTypeId");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Degree", b =>
+            modelBuilder.Entity("Domain.Entities.DataType", b =>
                 {
-                    b.Navigation("Person");
+                    b.Navigation("ChildsDataType");
                 });
 #pragma warning restore 612, 618
         }

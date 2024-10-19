@@ -1,10 +1,10 @@
 ﻿using Application.Bases.Interfaces.IServices;
-using Application.Dtos.Persons;
+using Application.Dtos.Tickets;
 using Domain.Entities;
 
 namespace Application.IServices
 {
-    public interface IPersonService : IBaseService<PersonDto, PersonDtoSelect, Person>
+    public interface ITicketService : IBaseService<Ticket>
     {
     }
 }
