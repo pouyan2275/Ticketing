@@ -4,6 +4,7 @@ using Infrastructure.Bases.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241019114702_addtypetoticket")]
+    partial class addtypetoticket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,9 +120,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DataTypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Family")
                         .HasColumnType("nvarchar(max)");
 
@@ -138,15 +138,21 @@ namespace Infrastructure.Migrations
                     b.Property<string>("NationalCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("NoteId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("State")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<Guid?>("TypeId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("DataTypeId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IsDeleted")
                         .HasFilter("IsDeleted = 0");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Tickets", (string)null);
                 });
@@ -169,11 +175,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Ticket", b =>
                 {
-                    b.HasOne("Domain.Entities.DataType", "DataType")
+                    b.HasOne("Domain.Entities.DataType", "Type")
                         .WithMany()
-                        .HasForeignKey("DataTypeId");
+                        .HasForeignKey("TypeId");
 
-                    b.Navigation("DataType");
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Domain.Entities.DataType", b =>

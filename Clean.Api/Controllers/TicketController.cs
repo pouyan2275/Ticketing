@@ -35,7 +35,7 @@ namespace Personal.Server.Controllers
                          ?? throw new Exception("تیکت مورد نظر یافت شد");
       
 
-            ticketDto.Adapt(ticket);
+            ticket = ticketDto.Adapt<Ticket>();
 
             var note = new Note()
             {

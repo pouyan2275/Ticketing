@@ -4,6 +4,7 @@ using Infrastructure.Bases.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241019125631_revert")]
+    partial class revert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +157,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.DataType", b =>
                 {
                     b.HasOne("Domain.Entities.DataType", null)
-                        .WithMany("ChildsDataType")
+                        .WithMany("SubDataType")
                         .HasForeignKey("DataTypeId");
                 });
 
@@ -178,7 +181,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.DataType", b =>
                 {
-                    b.Navigation("ChildsDataType");
+                    b.Navigation("SubDataType");
                 });
 
             modelBuilder.Entity("Domain.Entities.Ticket", b =>
